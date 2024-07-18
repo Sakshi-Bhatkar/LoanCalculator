@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link rel="stylesheet" href="./style.css">
+    <script src="loan.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div class="container">
+        
+    <form action="confirm.html" method="GET">
+        <h1 class="MainHeading">Loan Calculator</h1>
+        <label for="name" >Full Name:</label>
+        <input placeholder="Enter Name"
+          type="text"
+          id="name"
+          name="name"
+          pattern="^[a-zA-Z]{4,} [a-zA-Z]{4,}$"
+          required
+        />
+        <br /><br />
+        <label for="email">Email-Id:</label>
+        <input placeholder="Enter Email-Id"
+          type="email"
+          id="email"
+          name="email"
+          pattern="^[^\s@]+@[^\s@]+\.[^\s@]+$"
+          required
+        />
+        <br /><br />
+        <label for="pan">PAN Number:</label>
+        <input placeholder="Enter PAN-Number"
+          type="text"
+          id="pan"
+          name="pan"
+          pattern="^[A-Z]{5}[0-9]{4}[A-Z]$"
+          required
+        />
+        <br /><br />
+        <label for="loanAmount">Loan Amount:</label>
+        <input placeholder="Enter Amount"
+          type="text"
+          id="loanAmount"
+          name="loanAmount"
+          oninput="showEMI()"
+          pattern="^[0-9]{1,9}$"
+          required
+        />
+        <br />
+        <span id="amountInWords"></span>
+        <br />
+        <span id="emi"></span>
+        <br /><br />
+        <button type="submit" onsubmit="validateForm()">Submit</button>
+      </form>
+    </div>
+<script>
+ function calculateEMI(amount) {
+        var interestRate = 8.5 / 100 / 12;
+        var tenure = 15 * 12;
+        var emi =
+          (amount * interestRate * Math.pow(1 + interestRate, tenure)) /
+          (Math.pow(1 + interestRate, tenure) - 1);
+        return emi.toFixed(2);
+      }
+
+      function showEMI() {
+        var loanAmount = document.getElementById("loanAmount").value.trim();
+        if (loanAmount) {
+          document.getElementById("emi").innerText =
+            "Estimated EMI: " + calculateEMI(loanAmount);
+        }
+      }
+    </script>
+   
+</body>
+</html>
